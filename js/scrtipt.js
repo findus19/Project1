@@ -21,18 +21,27 @@ let calculate = document.getElementById('start'),
     addExpensesItem = document.querySelector('.additional_expenses-item'),
     targetAmount = document.querySelector('.target-amount'),
     periodSelect = document.querySelector('.period-select'),
-    periodAmount = document.querySelector('.period-amount');
-
+    periodAmount = document.querySelector('.period-amount'),
+    inputPlaceName = document.querySelectorAll('input[placeholder="Наименование"]'),
+    inputPlaceSum = document.querySelectorAll('input[placeholder="Сумма"]');
+    
 const isNumber = function(n) {
-    return !isNaN(parseFloat(n)) && isFinite(n);
-};
-const isString = function(n) {
-    let value = n;
-    let reg = /[,/a-zA-Zа-яА-Я ]/;
+    let value = n.value;
+    let reg = /[\D/g,''/]/;
         if (reg.test(value)) {
             return value;
         } else{
             alert("Некоректный ввод");
+        }
+};
+const isString = function(n) {
+    let value = n;
+    let reg = /[,/a-zA-Zа-яА-Я ]/;
+        if (!reg.test(value)) {
+            let res = value.replace(value, ' ');
+            return res;
+        }else {
+            return value
         }
 };
 
@@ -62,11 +71,7 @@ let appData = {
         appData.getExpensesMonth();
         appData.getAddExpenses();
         appData.getAddIncome();
-
         appData.getIncomeMonth();
-        
-        
-        
         appData.getBudget();
 
         appData.showResults(); 
@@ -83,6 +88,9 @@ let appData = {
     },
     addExpensesBlock : function() {
         let cloneExpensesItem = expensesItems[0].cloneNode(true);
+        cloneExpensesItem.querySelectorAll('input').forEach(function (item){
+            item.value = "";
+        });
         expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
         expensesItems = document.querySelectorAll('.expenses-items');
         if(expensesItems.length === 3){
@@ -102,6 +110,9 @@ let appData = {
     },
     addIncomeBlock : function() {
         let cloneIncomeItem = incomeItems[0].cloneNode(true);
+        cloneIncomeItem.querySelectorAll('input').forEach(function (item){
+            item.value = "";
+        });
         incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomePlus);
         incomeItems = document.querySelectorAll('.income-items');
         if(incomeItems.length === 3){
@@ -245,6 +256,28 @@ let appData = {
     }
 };
 
+inputPlaceName.forEach(function(item){
+    item.addEventListener('input', function(){
+        let inputValue = item.value;
+        let reg = /[.:;/a-zA-Z0-9 ]/;
+        if (reg.test(inputValue)){
+            inputValue = inputValue.replace(reg, '');
+            item.value = inputValue;
+        } /* /^[a-zA-Z0-9]+$/i */
+    });
+});
+
+inputPlaceSum.forEach(function(item){
+    item.addEventListener('input', function(){
+        let inputValue = item.value;
+        let reg = /[.:;,/a-zA-Zа-яА-Я ]/;
+        if (reg.test(inputValue)){
+            inputValue = inputValue.replace(reg, '');
+            item.value = inputValue;
+        }
+    });
+});
+
 calculate.disabled = true;
 salary.addEventListener('input', function () {
   if (salary.value === '') {
@@ -254,46 +287,11 @@ salary.addEventListener('input', function () {
     calculate.addEventListener('click', appData.start);
   }
 });
-//calculate.addEventListener('click', appData.start);
+
 periodSelect.addEventListener('input', appData.range);
 
 incomePlus.addEventListener('click', appData.addIncomeBlock);
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 
-/* console.log("Расход за месяц", appData.expensesMonth);
 
-console.log(appData.getTargetMonth());
-
-console.log(appData.getStatusIncome());
-
-appData.getInfoDeposit();
-console.log(appData.percentDeposit, appData.moneyDeposit, appData.calcSaveMoney()) */
-
-/* console.log("Наша программа включает в себя данные:");
-for (var prop in appData) {
-    console.log("appData." + prop + " = " + appData[prop]);
-}
-console.log(calculate);
-console.log(incomeAdd);
-console.log(expensesAdd);
-console.log(depositCheck);
-console.log(additionalIncome);
-
-console.log(budgetMonth);
-console.log(budgetDay);
-console.log(expensesMonth);
-console.log(addIncomeValue);
-console.log(addExpensesValue);
-console.log(incomePerios);
-console.log(targetMonth);
-
-console.log(salary);
-console.log(incomeTitle);
-console.log(incomeAmount);
-console.log(expensesTitle);
-console.log(epsensesAmount);
-console.log(addExpenses);
-console.log(mission);
-console.log(period);
-*/
  
