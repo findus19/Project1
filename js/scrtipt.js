@@ -1,6 +1,7 @@
 'use strict';
 
-let calculate = document.getElementById('start'),
+let start = document.getElementById('start'),
+    cancel = document.getElementById('cancel'),
     btnPlus = document.getElementsByTagName('button'),
     incomePlus = btnPlus[0],
     expensesPlus = btnPlus[1],
@@ -23,7 +24,8 @@ let calculate = document.getElementById('start'),
     periodSelect = document.querySelector('.period-select'),
     periodAmount = document.querySelector('.period-amount'),
     inputPlaceName = document.querySelectorAll('input[placeholder="Наименование"]'),
-    inputPlaceSum = document.querySelectorAll('input[placeholder="Сумма"]');
+    inputPlaceSum = document.querySelectorAll('input[placeholder="Сумма"]'),
+    inputText = document.querySelectorAll('input[type="text"]');
     
 const isNumber = function(n) {
     let value = n.value;
@@ -61,6 +63,8 @@ let appData = {
     start: function(){      
         this.budget = +salary.value;
 
+        this.pressStart();
+
         this.getExpenses();
         this.getIncome();
         this.getExpensesMonth();
@@ -71,6 +75,8 @@ let appData = {
         this.getBudget();
 
         this.showResults(); 
+
+        this.pressCancel();
     },
     showResults: function() {
         budgetMonthValue.value = this.budgetMonth;
@@ -141,7 +147,7 @@ let appData = {
             if(itemValue !== ""){
                 this.addIncome.push(itemValue);
             }
-        })
+        }, this)
     },
     /* asking: function() {
 
@@ -248,16 +254,33 @@ let appData = {
     },
     calcPeriod: function() {
         return this.budgetMonth * periodSelect.value;
+    },
+    pressStart: function() {
+        start.style.display = 'none';
+        cancel.style.display = 'block';
+        inputText.forEach(function(item) {
+            item.disabled = true;
+        });
+    },
+    pressCancel: function() {
+        cancel.addEventListener('click', function(){
+            inputText.forEach(function(item) {
+                item.disabled = false;
+                item.value = '';
+            });
+        start.style.display = 'block';
+        cancel.style.display = 'none';
+        });
     }
 };
 
-calculate.disabled = true;
+start.disabled = true;
 salary.addEventListener('input', function () {
   if (salary.value === '') {
-    calculate.disabled = true;
+    start.disabled = true;
   } else {
-    calculate.disabled = false;
-    calculate.addEventListener('click', appData.start.bind(appData, appData.start));
+    start.disabled = false;
+   
   }
 });
 
@@ -288,3 +311,4 @@ inputPlaceSum.forEach(function(item){
     });
 });
  
+start.addEventListener('click', appData.start.bind(appData, appData.start));
