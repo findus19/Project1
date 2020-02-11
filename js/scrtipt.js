@@ -78,6 +78,7 @@ AppData.prototype.showResults = function() {
     targetMonthValue.value = this.getTargetMonth();
     incomePeriodValue.value = this.calcPeriod();
     periodSelect.addEventListener('input', this.range);
+    
 };
 
 AppData.prototype.addExpensesBlock = function() {
@@ -89,7 +90,9 @@ AppData.prototype.addExpensesBlock = function() {
     expensesItems = document.querySelectorAll('.expenses-items');
     if(expensesItems.length === 3){
         expensesPlus.style.display = 'none';
-    }
+    };
+    AppData.prototype.checkName();
+    AppData.prototype.checkSumm();
 };
 
 AppData.prototype.getExpenses = function() {
@@ -109,6 +112,8 @@ AppData.prototype.addIncomeBlock = function() {
     cloneIncomeItem.querySelectorAll('input').forEach(function (item){
         item.value = "";
     });
+    AppData.prototype.checkName();
+    AppData.prototype.checkSumm();
     incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomePlus);
     incomeItems = document.querySelectorAll('.income-items');
     if(incomeItems.length === 3){
@@ -211,15 +216,17 @@ AppData.prototype.getInfoDeposit = function(){
     }  
 };
 
-AppData.prototype.range = function() {
-    const _this = this;
-    periodAmount.innerHTML = periodSelect.value;
-    incomePeriodValue.value = _this.calcPeriod();
-};
-
 AppData.prototype.calcPeriod = function() {
     return this.budgetMonth * periodSelect.value;
 };
+
+AppData.prototype.range = function() {
+    const _this = this;
+    periodAmount.innerHTML = periodSelect.value;
+    incomePeriodValue.value = budgetMonthValue.value * periodSelect.value;;
+};
+
+
 
 AppData.prototype.pressStart = function() {
     inputText = document.querySelectorAll('input[type="text"]');
@@ -254,6 +261,32 @@ AppData.prototype.pressCancel = function() {
     });
 };
 
+AppData.prototype.checkName = function() {
+    inputPlaceName.forEach(function(item){
+        item.addEventListener('input', function(){
+            let inputValue = item.value;
+            let reg = /[.:;/a-zA-Z0-9 ]/;
+            if (reg.test(inputValue)){
+                inputValue = inputValue.replace(reg, '');
+                item.value = inputValue;
+            } /* /^[a-zA-Z0-9]+$/i */
+        });
+    });
+};
+
+AppData.prototype.checkSumm = function() {
+    inputPlaceSum.forEach(function(item){
+        item.addEventListener('input', function(){
+            let inputValue = item.value;
+            let reg = /[.:;,/a-zA-Zа-яА-Я ]/;
+            if (reg.test(inputValue)){
+                inputValue = inputValue.replace(reg, '');
+                item.value = inputValue;
+            }
+        });
+    });
+};
+
 AppData.prototype.EventsListeners = function() {
     start.addEventListener('click', this.start.bind(appData));
     periodSelect.addEventListener('input', this.range.bind(appData));
@@ -272,6 +305,8 @@ console.log(AppData.prototype);
 start.disabled = true;
 AppData.prototype.check();
 AppData.prototype.EventsListeners();
+AppData.prototype.checkName();
+AppData.prototype.checkSumm();
 
 /* start.addEventListener('click', appData.start.bind(appData));
  */
@@ -280,18 +315,18 @@ AppData.prototype.EventsListeners();
 /* incomePlus.addEventListener('click', appData.addIncomeBlock.bind(appData));
 expensesPlus.addEventListener('click', appData.addExpensesBlock.bind(appData)); */
 
-inputPlaceName.forEach(function(item){
+/* inputPlaceName.forEach(function(item){
     item.addEventListener('input', function(){
         let inputValue = item.value;
         let reg = /[.:;/a-zA-Z0-9 ]/;
         if (reg.test(inputValue)){
             inputValue = inputValue.replace(reg, '');
             item.value = inputValue;
-        } /* /^[a-zA-Z0-9]+$/i */
+        } /* /^[a-zA-Z0-9]+$/i 
     });
-});
+}); */
 
-inputPlaceSum.forEach(function(item){
+/* inputPlaceSum.forEach(function(item){
     item.addEventListener('input', function(){
         let inputValue = item.value;
         let reg = /[.:;,/a-zA-Zа-яА-Я ]/;
@@ -300,6 +335,6 @@ inputPlaceSum.forEach(function(item){
             item.value = inputValue;
         }
     });
-});
+}); */
  
  
