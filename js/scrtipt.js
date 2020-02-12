@@ -52,10 +52,10 @@ class AppData {
 
     start() {      
     //salary = document.querySelector('.salary-amount')
-        this.budget = +salary.value;
+        
 
         this.pressStart();
-
+        this.budget = +salary.value;
         this.getExpInc();
         this.getExpensesMonth();
 
@@ -69,7 +69,7 @@ class AppData {
 
         this.showResults(); 
 
-        this.pressCancel();
+        //this.pressCancel();
     };
 
     showResults() {
@@ -78,9 +78,9 @@ class AppData {
         expensesMonthValue.value = this.expensesMonth;
         addExpensesValue.value = this.addExpenses.join(', ');
         addIncomeValue.value = this.addIncome.join(', ');
-        targetMonthValue.value = this.getTargetMonth();
-        periodSelect.addEventListener('input', this.range);
-        incomePeriodValue.value = this.calcPeriod();    
+        targetMonthValue.value = this.getTargetMonth();      
+        incomePeriodValue.value = this.calcPeriod();  
+        periodSelect.addEventListener('input', this.range());
     };
 
     /* addExpensesBlock() {
@@ -109,7 +109,6 @@ class AppData {
     }; */
 
     addExpIncBlock(plus, items){
-        
             let startStr;
             items.forEach( function(el) {
                 startStr = el;
@@ -135,7 +134,6 @@ class AppData {
             const itemTitel = item.querySelector(`.${startStr}-title`).value,
                 itemAmount = item.querySelector(`.${startStr}-amount`).value;
             if(itemTitel !== "" && itemAmount !== ""){
-                console.log(this);
                 this[startStr][itemTitel] = Number(itemAmount);
             };
         };
@@ -144,34 +142,15 @@ class AppData {
         expensesItems.forEach(count);
     };
 
-    getAddExpenses() {
-        let addExpenses = addExpensesItem.value.split(',');
-        addExpenses.forEach(item => {
-            item = item.trim();
-            if(item !== ""){
-                this.addExpenses.push(item);
-            }
-        }, this) 
-    };
-
-    getAddIncome() {
-        addlIncomeItem.forEach(item =>{
-            let itemValue = item.value.trim();
-            if(itemValue !== ""){
-                this.addIncome.push(itemValue);
-            }
-        }, this)
-    };
-
     getAddExpInc(){
         const count = item => {
-            
             let itemValue = item.value.trim();
             if(itemValue !== ""){
                 this.addIncome.push(itemValue);
             }
         };
         addlIncomeItem.forEach(count);
+
         let addExpenses = addExpensesItem.value.split(',');
         addExpenses.forEach(item => {
             item = item.trim();
@@ -252,10 +231,11 @@ class AppData {
     range() {
         const _this = this;
         periodAmount.innerHTML = periodSelect.value;
-        incomePeriodValue.innerHTML = this.calcPeriod();
+        console.log(this.budgetMonth);
+        let asd = this.budgetMonth * periodSelect.value
+        incomePeriodValue.innerHTML = asd;
     };
     pressStart() {
-        inputText = document.querySelectorAll('input[type="text"]');
         start.style.display = 'none';
         cancel.style.display = 'block';
         inputText.forEach(item => {
@@ -276,11 +256,9 @@ class AppData {
         this.deposit = false;
         this.percentDeposit = 0;
         this.moneyDeposit = 0;
-        cancel.addEventListener('click', () => {
-            inputText.forEach(item => {
-                item.disabled = false;
-                item.value = '';
-            });
+        inputText.forEach(item => {
+            item.disabled = false;
+            item.value = '';
         start.style.display = 'block';
         cancel.style.display = 'none';
         start.disabled = true;
@@ -318,16 +296,17 @@ class AppData {
         periodSelect.addEventListener('input', this.range.bind(appData));
         incomePlus.addEventListener('click', this.addExpIncBlock.bind(appData, incomePlus, incomeItems));
         expensesPlus.addEventListener('click', this.addExpIncBlock.bind(appData, expensesPlus, expensesItems));
+        cancel.addEventListener('click', this.pressCancel.bind(appData));   
     };
 };
 
 const appData = new AppData();
-
 start.disabled = true;
 appData.check();
 appData.EventsListeners();
 appData.checkName();
 appData.checkSumm();
+
 
  
  
