@@ -225,15 +225,14 @@ class AppData {
     };
 
     calcPeriod() {
+        console.log(this.budgetMonth);
         return this.budgetMonth * periodSelect.value;
     };
 
     range() {
-        const _this = this;
+
         periodAmount.innerHTML = periodSelect.value;
-        console.log(this.budgetMonth);
-        let asd = this.budgetMonth * periodSelect.value
-        incomePeriodValue.innerHTML = asd;
+        incomePeriodValue.value = this.calcPeriod();
     };
     pressStart() {
         start.style.display = 'none';
