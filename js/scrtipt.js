@@ -282,8 +282,8 @@ class AppData {
         cancel.style.display = 'none';
         start.disabled = true;
         });
-        incomePlus.style.display = false;
-        expensesPlus.style.display = false;
+        incomePlus.style.disabled = false;
+        expensesPlus.style.disabled = false;
     };
 
     checkName() {
