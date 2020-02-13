@@ -52,10 +52,9 @@ class AppData {
 
     start() {      
     //salary = document.querySelector('.salary-amount')
-        
+        this.budget = +salary.value;
 
         this.pressStart();
-        this.budget = +salary.value;
         this.getExpInc();
         this.getExpensesMonth();
 
@@ -122,6 +121,7 @@ class AppData {
                 e.value = "";
             });
             items[0].parentNode.insertBefore(cloneAddExpIncItem, plus);
+            //this.income += items;
             items = document.querySelectorAll(`.${startStr}-items`);
             if(items.length === 3){
                 plus.style.display = 'none';
@@ -163,7 +163,11 @@ class AppData {
 
 /* сумму всех дополнительных доходов за месяц */
     getIncomeMonth() {
+        let incomeMon = document.querySelectorAll('.income-items');
+        //this.income += incomeMon;
         for(let i in this.income){
+            console.log(incomeItems);
+            console.log(this.income);
             this.incomeMonth += +this.income[i];
         }
         return this.incomeMonth
@@ -230,11 +234,11 @@ class AppData {
     };
 
     range() {
-
         periodAmount.innerHTML = periodSelect.value;
         incomePeriodValue.value = this.calcPeriod();
     };
     pressStart() {
+        inputText = document.querySelectorAll('input[type="text"]');
         start.style.display = 'none';
         cancel.style.display = 'block';
         inputText.forEach(item => {
@@ -243,6 +247,22 @@ class AppData {
     };
 
     pressCancel() {
+        incomeItems = document.querySelectorAll('.income-items');
+        expensesItems = document.querySelectorAll('.expenses-items');
+        for(let i = 1; i < incomeItems.length; i++){
+            if(i !== 0) {
+                incomeItems[i].parentNode.removeChild(incomeItems[i]);
+               }
+            //incomeItems[i].parentNode.removeChild(incomeItems[i]);
+            //incomePlus.style.display = 'block';
+        };
+        for(let i = 1; i < expensesItems.length; i++){
+            if(i !== 0) {
+                expensesItems[i].parentNode.removeChild(expensesItems[i]);
+               }
+            //expensesItems[i].parentNode.removeChild(expensesItems[i]);
+            //expensesPlus.style.display = 'block';
+        };
         this.budget = 0;
         this.budgetDay = 0;
         this.budgetMonth = 0;
@@ -262,6 +282,8 @@ class AppData {
         cancel.style.display = 'none';
         start.disabled = true;
         });
+        incomePlus.style.display = false;
+        expensesPlus.style.display = false;
     };
 
     checkName() {
