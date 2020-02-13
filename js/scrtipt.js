@@ -55,24 +55,17 @@ class AppData {
     };
 
     start() {      
-    //salary = document.querySelector('.salary-amount')
         this.budget = +salary.value;
 
         this.pressStart();
         this.getExpInc();
         this.getExpensesMonth();
-
-        //this.getAddExpenses();
-        //this.getAddIncome();
         this.getAddExpInc();
         this.getInfoDeposit()
-        this.getIncomeMonth();
-        
+        this.getIncomeMonth();        
         this.getBudget();
-
         this.showResults(); 
 
-        //this.pressCancel();
     };
 
     showResults() {
@@ -86,31 +79,6 @@ class AppData {
         incomePeriodValue.value = this.calcPeriod();  
         periodSelect.addEventListener('input', this.range());
     };
-
-    /* addExpensesBlock() {
-        let cloneExpensesItem = expensesItems[0].cloneNode(true);
-        cloneExpensesItem.querySelectorAll('input').forEach(item =>{
-            item.value = "";
-        });
-        expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
-        expensesItems = document.querySelectorAll('.expenses-items');
-        if(expensesItems.length === 3){
-            expensesPlus.style.display = 'none';
-        };
-    };
-
-    addIncomeBlock() {
-        let cloneIncomeItem = incomeItems[0].cloneNode(true);
-        cloneIncomeItem.querySelectorAll('input').forEach(item =>{
-            item.value = "";
-        });
-        incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomePlus);
-        incomeItems = document.querySelectorAll('.income-items');
-        if(incomeItems.length === 3){
-            incomePlus.style.display = 'none';
-        };
-        inputText += incomeItems; 
-    }; */
 
     addExpIncBlock(plus, items){
             let startStr;
