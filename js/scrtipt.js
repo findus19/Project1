@@ -254,14 +254,14 @@ class AppData {
                 incomeItems[i].parentNode.removeChild(incomeItems[i]);
                }
             //incomeItems[i].parentNode.removeChild(incomeItems[i]);
-            //incomePlus.style.display = 'block';
+            incomePlus.style.display = 'block';
         };
         for(let i = 1; i < expensesItems.length; i++){
             if(i !== 0) {
                 expensesItems[i].parentNode.removeChild(expensesItems[i]);
                }
             //expensesItems[i].parentNode.removeChild(expensesItems[i]);
-            //expensesPlus.style.display = 'block';
+            expensesPlus.style.display = 'block';
         };
         this.budget = 0;
         this.budgetDay = 0;
@@ -284,6 +284,8 @@ class AppData {
         });
         incomePlus.style.disabled = false;
         expensesPlus.style.disabled = false;
+        //incomePlus.style.display = true;
+        //expensesPlus.style.display = true;
     };
 
     checkName() {
