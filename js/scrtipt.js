@@ -81,7 +81,8 @@ class AppData {
         expensesMonthValue.value = this.expensesMonth;
         addExpensesValue.value = this.addExpenses.join(', ');
         addIncomeValue.value = this.addIncome.join(', ');
-        targetMonthValue.value = this.getTargetMonth();      
+        targetMonthValue.value = this.getTargetMonth();
+        if(targetMonthValue.value)      
         incomePeriodValue.value = this.calcPeriod();  
         periodSelect.addEventListener('input', this.range());
     };
@@ -200,6 +201,8 @@ class AppData {
             return month;
         } else if(month < 0) {
             return "Цель не будет достигнута";
+        }else {
+            return targetAmount.value = 0;
         };
     };
 
@@ -220,18 +223,6 @@ class AppData {
         if(this.deposit){
             this.percentDeposit = depositPercent.value;
             this.moneyDeposit = depositAmount.value;
-            /* let percent, moneyDep = 0;
-            do{
-                percent = prompt("Какой годовой процент", "Введите число");
-            }
-            while (!isNumber(percent));
-            this.percentDeposit = Number(percent);
-            
-            do{
-                moneyDep = prompt("Какая сумма заложена?", "Введите число");
-            }
-            while (!isNumber(moneyDep));
-            this.moneyDeposit = Number(moneyDep); */
         }  
     };
 
