@@ -118,16 +118,12 @@ class AppData {
                 startStr = el;
             });
             startStr = startStr.className.split('-')[0];
-            //console.log(startStr);
-            //console.log(items)
             let cloneAddExpIncItem = items[0].cloneNode(true);
-            //console.dir(items[0].cloneNode(true));
             cloneAddExpIncItem.querySelectorAll('input').forEach(e =>{
                 e.value = "";
             });
             items[0].parentNode.insertBefore(cloneAddExpIncItem, plus);
-            //this.income += items;
-            items = document.querySelectorAll(`.${startStr}-items`);
+            startStr = document.querySelectorAll(`.${startStr}-items`);
             if(items.length === 3){
                 plus.style.display = 'none';
             };
